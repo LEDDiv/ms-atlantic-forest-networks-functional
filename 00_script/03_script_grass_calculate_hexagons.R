@@ -22,8 +22,11 @@ rgrass::initGRASS(gisBase = system("grass --config path", inter = TRUE),
                   override = TRUE)
 
 # filter
-rgrass::execGRASS(cmd = "v.extract", flags = "overwrite", input = "af_lim_hex_sel", 
-                  output="af_lim_hex_sel_92728", where="cat = '92728'")
+rgrass::execGRASS(cmd = "v.extract", 
+                  flags = "overwrite", 
+                  input = "af_lim_hex_sel", 
+                  output="af_lim_hex_sel_92728", 
+                  where="cat = '92728'")
 
 # region
 rgrass::execGRASS(cmd = "g.region", flags = c("a", "p"), raster = "mapbiomas_brazil_af_trinacional_2023_forest_na_patches")
@@ -31,7 +34,8 @@ rgrass::execGRASS(cmd = "g.region", flags = c("a", "p"), vector = "af_lim_hex_se
 rgrass::execGRASS(cmd = "r.mask", flags = "overwrite", vector = "af_lim_hex_sel_92728")
 
 # raster to vector
-rgrass::execGRASS(cmd = "r.to.vect", flags = "overwrite", 
+rgrass::execGRASS(cmd = "r.to.vect", 
+                  flags = "overwrite", 
                   input = "mapbiomas_brazil_af_trinacional_2023_forest_na_patches_area", 
                   output = "mapbiomas_brazil_af_trinacional_2023_forest_na_patches_area_92728", 
                   type = "area")
@@ -56,7 +60,8 @@ rgrass::execGRASS(cmd = "v.out.ogr", flags = "overwrite",
                   output = "01_data/03_vect/hex_sel_92728.gpkg", 
                   type = "area")
 
-rgrass::execGRASS(cmd = "v.out.ogr", flags = "overwrite", 
+rgrass::execGRASS(cmd = "v.out.ogr", 
+                  flags = "overwrite", 
                   input = "mapbiomas_brazil_af_trinacional_2023_forest_na_patches_area_92728", 
                   output = "01_data/03_vect/mapbiomas_brazil_af_trinacional_2023_forest_na_patches_area_92728.gpkg", 
                   type = "area")
@@ -67,3 +72,5 @@ rgrass::execGRASS(cmd = "r.out.gdal",
                   output = "01_data/mapbiomas_brazil_af_trinacional_2023_forest_na_patches_area_92728.tif",
                   format = "GTiff",
                   createopt = "COMPRESS=DEFLATE,ZLEVEL=9,TILED=YES")
+
+# end ---------------------------------------------------------------------

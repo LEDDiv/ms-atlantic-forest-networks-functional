@@ -59,6 +59,9 @@ rgrass::execGRASS(cmd = "v.info",
                   map = "af_lim_hex_sel",
                   flags = "t")
 
+# export
+rgrass::execGRASS(cmd = "v.out.ogr",
+                  input = "af_lim_hex_sel",
+                  output = "01_data/03_vect/hex_sel.gpkg")
+
 # end ---------------------------------------------------------------------
-
-

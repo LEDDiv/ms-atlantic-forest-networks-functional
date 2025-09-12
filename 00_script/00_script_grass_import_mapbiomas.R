@@ -78,7 +78,7 @@ rgrass::execGRASS(cmd = "r.out.gdal",
 rgrass::execGRASS(cmd = "r.out.gdal", 
                   flags = "overwrite", 
                   input = "mapbiomas_brazil_af_trinacional_2023_natural",
-                  output = "01_data/mapbiomas_brazil_af_trinacional_2023_natural,tif",
+                  output = "01_data/mapbiomas_brazil_af_trinacional_2023_natural.tif",
                   format = "GTiff",
                   createopt = "COMPRESS=DEFLATE,ZLEVEL=9,TILED=YES")
 
