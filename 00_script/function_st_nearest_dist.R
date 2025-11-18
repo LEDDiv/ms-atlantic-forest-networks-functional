@@ -2,6 +2,7 @@
 st_nearest_dist <- function(patches){
   
   library(sf)
+  library(tidyverse)
   
   data_n <- NULL
   lines_n <- NULL
@@ -19,7 +20,7 @@ st_nearest_dist <- function(patches){
     sf::st_cast("POINT", warn = FALSE) %>% 
     sf::st_buffer(.01) %>% 
     sf::st_as_sf() %>% 
-    sf::st_join(p) %>% 
+    sf::st_join(patches) %>% 
     dplyr::arrange(lid) %>% 
     dplyr::relocate(pid, .before = 1)
   
