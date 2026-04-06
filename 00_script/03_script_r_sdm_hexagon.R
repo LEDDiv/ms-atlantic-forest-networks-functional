@@ -96,6 +96,10 @@ sdm_plant
 names(sdm_plant) <- sdm_plant_names
 sdm_plant
 
+readr::write_csv(sdm_birds_names, "sdm_birds_names.csv")
+readr::write_csv(sdm_plant_names, "sdm_plant_names.csv")
+
+
 # hexagons ----------------------------------------------------------------
 
 # import hexagons
@@ -106,22 +110,33 @@ hex
 plot(hex)
 
 # import data processed
-hex_processed <- dir("01_data/05_hex_sdm/") %>% 
+hex_processed_bird <- dir("01_data/05_hex_sdm/00_raw/") %>% 
+  stringr::str_subset("hex_bird_hid") %>% 
   stringr::str_replace("hex_bird_hid", "") %>% 
+  stringr::str_replace(".csv", "") %>% 
+  as.numeric() %>% 
+  sort()
+hex_processed_bird
+
+hex_processed_plant <- dir("01_data/05_hex_sdm/00_raw/") %>% 
+  stringr::str_subset("hex_plant_hid") %>% 
   stringr::str_replace("hex_plant_hid", "") %>% 
   stringr::str_replace(".csv", "") %>% 
-  unique() %>% 
   as.numeric() %>% 
-  sort() %>% 
-  last()
+  sort()
+hex_processed_plant
+
+hex_processed <- unique(c(hex_processed_bird, hex_processed_plant))
 hex_processed
 
-  
+hex_not_processed <- setdiff(hex$hid, hex_processed)
+hex_not_processed
+
 # sdm and hexagons
 doParallel::registerDoParallel(parallelly::availableCores(omit = 2))
 
-foreach::foreach(i=hex_processed:nrow(hex)) %dopar% {
-# for(i in 1:nrow(hex)){
+# foreach::foreach(i=hex_processed:nrow(hex)) %dopar% {
+for(i in hex_not_processed){
   
   print(i)
   
@@ -141,8 +156,8 @@ foreach::foreach(i=hex_processed:nrow(hex)) %dopar% {
                          str_c("md_", .)) %>% 
     dplyr::mutate(hid = hex_i$hid, .before = 1)
   
-  readr::write_csv(hex_i_bird_md, paste0("01_data/05_hex_sdm/hex_bird_hid", i, ".csv"))
-  readr::write_csv(hex_i_plant_md, paste0("01_data/05_hex_sdm/hex_plant_hid", i, ".csv"))
+  readr::write_csv(hex_i_bird_md, paste0("01_data/05_hex_sdm/00_raw/hex_bird_hid", i, ".csv"))
+  readr::write_csv(hex_i_plant_md, paste0("01_data/05_hex_sdm/00_raw/hex_plant_hid", i, ".csv"))
     
 }
 doParallel::stopImplicitCluster()

@@ -64,4 +64,14 @@ rgrass::execGRASS(cmd = "v.out.ogr",
                   input = "af_lim_hex_sel",
                   output = "01_data/03_vect/hex_sel.gpkg")
 
+# import hexagons
+hex <- terra::vect("01_data/03_vect/hex_sel.gpkg") %>% 
+  tidyterra::mutate(hid = 1:nrow(.)) %>% 
+  tidyterra::relocate(hid, .before = 1)
+hex
+plot(hex)
+
+# export
+terra::writeVector(hex, "01_data/03_vect/hex_sel_hid.gpkg")
+
 # end ---------------------------------------------------------------------

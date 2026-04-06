@@ -1,6 +1,7 @@
 # folders
 /01_data/
-/02_test/
+/02_output/
+/renv/
 
 # History files
 .Rhistory
